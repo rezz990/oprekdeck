@@ -53,15 +53,59 @@
 }
 
 @layer components {
-  .hud-panel {
-    background-image: radial-gradient(
+  :root,
+  [data-quality="high"] {
+    --hud-panel-background: radial-gradient(
       120% 90% at 50% 0%,
       color-mix(in srgb, var(--color-accent) 7%, transparent),
       transparent 58%
     );
-    box-shadow:
+    --hud-panel-shadow:
       0 28px 64px -48px rgb(0 0 0 / 0.9),
       inset 0 1px 0 rgb(148 163 184 / 0.06);
+    --hud-panel-accent-line: block;
+    --hud-panel-grid: block;
+    --hud-panel-ornaments: block;
+    --hud-button-glow: 0 0 24px -10px color-mix(in srgb, var(--color-accent) 85%, transparent);
+    --hud-button-danger-glow: 0 0 24px -10px color-mix(in srgb, var(--color-critical) 80%, transparent);
+    --hud-badge-glow: 0 0 18px -10px currentColor;
+    --hud-gauge-ring-filter: drop-shadow(0 0 4px currentColor);
+    --hud-gauge-ticks: inline;
+  }
+
+  [data-quality="medium"] {
+    --hud-panel-background: radial-gradient(
+      120% 90% at 50% 0%,
+      color-mix(in srgb, var(--color-accent) 4%, transparent),
+      transparent 52%
+    );
+    --hud-panel-shadow: 0 24px 48px -44px rgb(0 0 0 / 0.8);
+    --hud-panel-accent-line: block;
+    --hud-panel-grid: block;
+    --hud-panel-ornaments: block;
+    --hud-button-glow: none;
+    --hud-button-danger-glow: none;
+    --hud-badge-glow: none;
+    --hud-gauge-ring-filter: none;
+    --hud-gauge-ticks: inline;
+  }
+
+  [data-quality="low"] {
+    --hud-panel-background: none;
+    --hud-panel-shadow: none;
+    --hud-panel-accent-line: none;
+    --hud-panel-grid: none;
+    --hud-panel-ornaments: none;
+    --hud-button-glow: none;
+    --hud-button-danger-glow: none;
+    --hud-badge-glow: none;
+    --hud-gauge-ring-filter: none;
+    --hud-gauge-ticks: none;
+  }
+
+  .hud-panel {
+    background-image: var(--hud-panel-background);
+    box-shadow: var(--hud-panel-shadow);
   }
 
   .hud-panel::before {
@@ -71,6 +115,7 @@
     left: 1.5rem;
     right: 1.5rem;
     height: 1px;
+    display: var(--hud-panel-accent-line);
     background: linear-gradient(
       90deg,
       transparent,
@@ -81,11 +126,16 @@
   }
 
   .hud-panel__grid {
+    display: var(--hud-panel-grid);
     background-image:
       linear-gradient(to right, rgb(148 163 184 / 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, rgb(148 163 184 / 0.05) 1px, transparent 1px);
     background-size: 24px 24px;
     mask-image: radial-gradient(120% 90% at 50% 0%, black 25%, transparent 78%);
+  }
+
+  .hud-panel__ornaments {
+    display: var(--hud-panel-ornaments);
   }
 
   .hud-panel__corner {
@@ -126,41 +176,23 @@
   }
 
   .hud-button--glow {
-    box-shadow: 0 0 24px -10px color-mix(in srgb, var(--color-accent) 85%, transparent);
+    box-shadow: var(--hud-button-glow);
   }
 
   .hud-button--danger-glow {
-    box-shadow: 0 0 24px -10px color-mix(in srgb, var(--color-critical) 80%, transparent);
+    box-shadow: var(--hud-button-danger-glow);
   }
 
   .risk-badge {
-    box-shadow: 0 0 18px -10px currentColor;
+    box-shadow: var(--hud-badge-glow);
   }
 
   .hud-gauge__ring {
-    filter: drop-shadow(0 0 4px currentColor);
+    filter: var(--hud-gauge-ring-filter);
   }
 
-  [data-quality="low"] .hud-panel {
-    background-image: none;
-    box-shadow: none;
-  }
-
-  [data-quality="low"] .hud-panel::before,
-  [data-quality="low"] .hud-panel__grid,
-  [data-quality="low"] .hud-panel__ornaments,
-  [data-quality="low"] .hud-gauge__ticks {
-    display: none;
-  }
-
-  [data-quality="low"] .hud-button--glow,
-  [data-quality="low"] .hud-button--danger-glow,
-  [data-quality="low"] .risk-badge {
-    box-shadow: none;
-  }
-
-  [data-quality="low"] .hud-gauge__ring {
-    filter: none;
+  .hud-gauge__ticks {
+    display: var(--hud-gauge-ticks);
   }
 }
 
@@ -173,4 +205,14 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+[data-motion="reduced"],
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }

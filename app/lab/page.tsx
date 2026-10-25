@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { QualityControl } from "./quality-control";
 import { Showcase } from "./showcase";
 
 export const metadata: Metadata = {
@@ -50,10 +51,15 @@ export default function LabPage() {
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-6 text-ink-muted">
             Pratinjau token dan komponen dasar OprekDeck. Konten yang sama
-            dirender pada dua tier kualitas: high menampilkan grid, sudut HUD,
-            dan glow; low tampil datar tanpa efek.
+            dirender pada tiga tier kualitas: high menampilkan grid, sudut HUD,
+            dan glow; medium mempertahankan struktur tanpa glow; low tampil
+            datar tanpa efek.
           </p>
         </header>
+
+        <div className="mt-8">
+          <QualityControl />
+        </div>
 
         <section
           aria-labelledby="tokens-title"
@@ -125,6 +131,7 @@ export default function LabPage() {
 
         <div className="mt-12 space-y-12">
           <Showcase quality="high" />
+          <Showcase quality="medium" />
           <Showcase quality="low" />
         </div>
       </div>

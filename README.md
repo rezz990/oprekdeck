@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Buka http://localhost:3000 dengan Chrome, Edge, atau Opera desktop. Halaman uji visual ada di http://localhost:3000/lab (tier high/low, tidak diindeks).
+Buka http://localhost:3000 dengan Chrome, Edge, atau Opera desktop. Halaman uji visual ada di http://localhost:3000/lab (tier high/medium/low plus kontrol auto/manual yang tersimpan, tidak diindeks).
 
 ## Script
 

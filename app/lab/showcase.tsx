@@ -2,8 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Gauge } from "@/components/ui/gauge";
 import { HudPanel } from "@/components/ui/panel";
 import { RiskBadge } from "@/components/ui/risk-badge";
+import type { QualityTier } from "@/lib/quality/detect";
 
-export type QualityTier = "high" | "low";
+const tierLabels: Record<QualityTier, string> = {
+  high: "High",
+  medium: "Medium",
+  low: "Low",
+};
 
 const tweakRisks = ["aman", "sedang", "lanjutan"] as const;
 const debloatRisks = ["aman", "disarankan", "lanjutan", "ahli", "jangan"] as const;
@@ -21,7 +26,7 @@ export function Showcase({ quality }: { quality: QualityTier }) {
             Quality tier
           </p>
           <p className="mt-1 font-display text-2xl font-semibold tracking-wide text-ink">
-            {quality === "high" ? "High" : "Low"}
+            {tierLabels[quality]}
           </p>
         </div>
         <code className="rounded border border-line/70 bg-panel/60 px-2 py-1 font-mono text-[10px] text-ink-dim">
