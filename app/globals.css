@@ -1,1 +1,176 @@
 @import "tailwindcss";
+
+@theme {
+  --color-void: #04070c;
+  --color-deck: #060a11;
+  --color-panel: #0a111c;
+  --color-panel-raised: #101a29;
+  --color-line: #1c2a3d;
+  --color-line-strong: #2a3d55;
+  --color-ink: #dbe7f5;
+  --color-ink-muted: #8ca3bd;
+  --color-ink-dim: #5d728a;
+  --color-accent: #22d3ee;
+  --color-accent-bright: #67e8f9;
+  --color-safe: #34d399;
+  --color-info: #60a5fa;
+  --color-caution: #fbbf24;
+  --color-danger: #fb7185;
+  --color-critical: #f43f5e;
+
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --radius-hud: 0.75rem;
+}
+
+@theme inline {
+  --font-display: var(--font-display-face), "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 32%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .hud-panel {
+    background-image: radial-gradient(
+      120% 90% at 50% 0%,
+      color-mix(in srgb, var(--color-accent) 7%, transparent),
+      transparent 58%
+    );
+    box-shadow:
+      0 28px 64px -48px rgb(0 0 0 / 0.9),
+      inset 0 1px 0 rgb(148 163 184 / 0.06);
+  }
+
+  .hud-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-accent) 55%, transparent),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  .hud-panel__grid {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(120% 90% at 50% 0%, black 25%, transparent 78%);
+  }
+
+  .hud-panel__corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-style: solid;
+    border-width: 0;
+    border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  }
+
+  .hud-panel__corner--tl {
+    top: 5px;
+    left: 5px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .hud-panel__corner--tr {
+    top: 5px;
+    right: 5px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .hud-panel__corner--bl {
+    bottom: 5px;
+    left: 5px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .hud-panel__corner--br {
+    right: 5px;
+    bottom: 5px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+  }
+
+  .hud-button--glow {
+    box-shadow: 0 0 24px -10px color-mix(in srgb, var(--color-accent) 85%, transparent);
+  }
+
+  .hud-button--danger-glow {
+    box-shadow: 0 0 24px -10px color-mix(in srgb, var(--color-critical) 80%, transparent);
+  }
+
+  .risk-badge {
+    box-shadow: 0 0 18px -10px currentColor;
+  }
+
+  .hud-gauge__ring {
+    filter: drop-shadow(0 0 4px currentColor);
+  }
+
+  [data-quality="low"] .hud-panel {
+    background-image: none;
+    box-shadow: none;
+  }
+
+  [data-quality="low"] .hud-panel::before,
+  [data-quality="low"] .hud-panel__grid,
+  [data-quality="low"] .hud-panel__ornaments,
+  [data-quality="low"] .hud-gauge__ticks {
+    display: none;
+  }
+
+  [data-quality="low"] .hud-button--glow,
+  [data-quality="low"] .hud-button--danger-glow,
+  [data-quality="low"] .risk-badge {
+    box-shadow: none;
+  }
+
+  [data-quality="low"] .hud-gauge__ring {
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
