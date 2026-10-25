@@ -13,6 +13,9 @@
     "test:e2e": "playwright test --pass-with-no-tests"
   },
   "dependencies": {
+    "@yume-chan/adb": "2.6.4",
+    "@yume-chan/adb-credential-web": "2.1.0",
+    "@yume-chan/adb-daemon-webusb": "2.3.2",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0"
